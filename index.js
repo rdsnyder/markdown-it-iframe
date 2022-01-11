@@ -48,7 +48,13 @@ module.exports = function iframe_plugin(md, options) {
         token.attrs = [["class", "iframe-container"]]
         token = state.push("iframe_open", "iframe", 1)
         token.markup = "/i/"
-        token.attrs = attrs.concat([["src", content]])
+
+        let args = content.split('|')
+        let url = args[0]
+        let iframeAttrs = [["src", url]]
+        args.slice(1).forEach(arg => iframeAttrs.push(arg.split('=')))
+
+        token.attrs = attrs.concat(iframeAttrs)
         token.map = [startLine, state.line]
 
         token = state.push("iframe_close", "iframe", -1)
