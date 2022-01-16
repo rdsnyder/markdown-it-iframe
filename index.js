@@ -41,7 +41,6 @@ module.exports = function iframe_plugin(md, options) {
       return false
     }
 
-    /* istanbul ignore else */
     if (!silent) {
       if (options.renderIframe) {
         token = state.push("div_open", "div", 1)
@@ -50,7 +49,7 @@ module.exports = function iframe_plugin(md, options) {
         token.markup = "/i/"
 
         let args = content.split('|')
-        let url = args[0]
+        let url = args[0].indexOf('http') === 0 ? args[0] : `https://iiif.qhub.info/${args[0]}`
         let iframeAttrs = [["src", url]]
         args.slice(1).forEach(arg => iframeAttrs.push(arg.split('=')))
 
